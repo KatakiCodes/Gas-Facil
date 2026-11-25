@@ -36,7 +36,28 @@
 
     // 6. Configurar simulador do "Gás Bazou" (Kilape)
     setupBazouSimulator();
+
+    // 7. Atualizar estado de autenticação no menu
+    updateNavbarAuthState();
   });
+
+  function updateNavbarAuthState() {
+    const navAuthButtons = document.getElementById('navAuthButtons');
+    if (!navAuthButtons || !GF.authService) return;
+
+    if (GF.authService.isAuthenticated()) {
+      const user = GF.authService.getCurrentUser();
+      const firstName = user?.name ? user.name.split(' ')[0] : 'Cliente';
+      navAuthButtons.innerHTML = `
+        <a href="dashboard.html" class="btn btn-outline-primary btn-sm px-3 fw-semibold">
+          <i class="bi bi-speedometer2 me-1"></i>Meu Painel (${firstName})
+        </a>
+        <a href="#precario" class="btn btn-primary btn-sm px-3 fw-semibold shadow-sm">
+          <i class="bi bi-cart-check me-1" aria-hidden="true"></i>Pedir Gás
+        </a>
+      `;
+    }
+  }
 
   async function loadPricing() {
     const container = document.getElementById('pricingCardsContainer');

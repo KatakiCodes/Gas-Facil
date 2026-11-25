@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt" data-theme="blue">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criar Conta — Gás-Fácil</title>
+  <meta name="description" content="Cadastre-se no Gás-Fácil com nome, telefone e palavra-passe e ganhe 50 pontos de fidelidade.">
+
+  <!-- Bootstrap 5.3 Local -->
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  
+  <!-- Bootstrap Icons Local -->
+  <link rel="stylesheet" href="assets/css/bootstrap-icons.min.css">
+  
+  <!-- Variáveis de Tema (White-label das Botijas em Angola) -->
+  <link rel="stylesheet" href="assets/css/theme.css">
+  
+  <!-- Estilos Personalizados e Seguros -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+
+  <!-- Aplicação imediata do tema para evitar oscilação visual -->
+  <script>
+    (function() {
+      try {
+        var savedTheme = localStorage.getItem('gf_theme') || 'blue';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body class="bg-light">
+
+  <!-- Barra Superior Mínima -->
+  <header class="border-bottom bg-white py-2">
+    <div class="container d-flex justify-content-between align-items-center">
+      <a href="index.html" class="d-flex align-items-center gap-2 text-decoration-none">
+        <div class="gf-logo-badge shadow-sm">
+          <i class="bi bi-fuel-pump-fill" aria-hidden="true"></i>
+        </div>
+        <div>
+          <span class="fs-4 fw-bold text-dark d-block lh-1">Gás-Fácil</span>
+          <small class="text-muted" style="font-size: 0.75rem;">Entrega no teu cúbico</small>
+        </div>
+      </a>
+
+      <!-- Seletor de Tema & Link p/ Início -->
+      <div class="d-flex align-items-center gap-2">
+        <div class="gf-theme-selector" title="Escolha a cor da sua botija/marca de preferência">
+          <small class="text-muted fw-bold me-1 d-none d-sm-inline" style="font-size: 0.75rem;">Botija:</small>
+          <button type="button" class="gf-theme-dot" data-set-theme="blue" title="Azul (Sonangol)" aria-label="Tema Azul"></button>
+          <button type="button" class="gf-theme-dot" data-set-theme="green" title="Verde (PumanGás)" aria-label="Tema Verde"></button>
+          <button type="button" class="gf-theme-dot" data-set-theme="orange" title="Laranja (TotalEnergies)" aria-label="Tema Laranja"></button>
+          <button type="button" class="gf-theme-dot" data-set-theme="yellow" title="Amarela (Galp/Regional)" aria-label="Tema Amarela"></button>
+        </div>
+        <a href="index.html" class="btn btn-outline-secondary btn-sm ms-2">
+          <i class="bi bi-house me-1"></i>Início
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="gf-auth-wrapper">
+    <div class="gf-auth-card">
+      <div class="text-center mb-4">
+        <h1 class="h3 fw-bold text-dark mb-1">Criar Conta</h1>
+        <p class="text-muted small mb-0">Registo rápido e simples em 3 passos para pedir gás no seu cúbico.</p>
+      </div>
+
+      <!-- Badge de Boas-vindas ao Programa de Fidelidade -->
+      <div class="alert alert-primary bg-primary-subtle border-0 py-2 px-3 small d-flex align-items-center mb-3">
+        <i class="bi bi-gift-fill me-2 fs-5"></i>
+        <div>
+          <strong>Bónus de Boas-vindas:</strong> Ganha <strong>50 pontos de fidelidade</strong> automaticamente ao cadastrar-se!
+        </div>
+      </div>
+
+      <!-- Alerta dinâmico de feedback -->
+      <div id="registerAlert" class="alert d-none py-2 px-3 small d-flex align-items-center mb-3" role="alert"></div>
+
+      <!-- Formulário de Cadastro (Apenas Nome Completo, Telefone e Palavra-passe) -->
+      <form id="formRegister" class="needs-validation" novalidate>
+        <!-- 1. Nome Completo -->
+        <div class="mb-3">
+          <label for="regName" class="form-label fw-semibold small text-dark">
+            <i class="bi bi-person me-1 text-primary"></i>Nome Completo
+          </label>
+          <input 
+            type="text" 
+            class="form-control" 
+            id="regName" 
+            placeholder="Ex: Ana Luísa dos Santos" 
+            required 
+            autocomplete="name"
+          >
+        </div>
+
+        <!-- 2. Número de Telefone -->
+        <div class="mb-3">
+          <label for="regPhone" class="form-label fw-semibold small text-dark">
+            <i class="bi bi-telephone me-1 text-primary"></i>Número de Telefone
+          </label>
+          <div class="input-group">
+            <span class="input-group-text bg-light text-muted small fw-semibold">+244</span>
+            <input 
+              type="tel" 
+              class="form-control" 
+              id="regPhone" 
+              placeholder="923 456 789" 
+              required 
+              autocomplete="tel"
+              inputmode="numeric"
+            >
+          </div>
+          <div class="form-text text-muted" style="font-size: 0.75rem;">Usado para contacto na entrega e login.</div>
+        </div>
+
+        <!-- 3. Palavra-passe -->
+        <div class="mb-3">
+          <label for="regPassword" class="form-label fw-semibold small text-dark">
+            <i class="bi bi-lock me-1 text-primary"></i>Palavra-passe
+          </label>
+          <div class="input-group">
+            <input 
+              type="password" 
+              class="form-control" 
+              id="regPassword" 
+              placeholder="Crie uma palavra-passe" 
+              required 
+              autocomplete="new-password"
+            >
+            <button 
+              type="button" 
+              class="btn btn-outline-secondary" 
+              data-toggle-password="regPassword" 
+              title="Mostrar ou ocultar senha"
+            >
+              <i class="bi bi-eye"></i>
+            </button>
+          </div>
+          <div class="form-text text-muted" style="font-size: 0.75rem;">Mínimo de 3 caracteres.</div>
+        </div>
+
+        <!-- Botão de Submissão -->
+        <div class="d-grid gap-2 mb-3">
+          <button type="submit" id="btnRegisterSubmit" class="btn btn-primary fw-semibold py-2">
+            <i class="bi bi-person-check-fill me-2" aria-hidden="true"></i>Criar Minha Conta
+          </button>
+        </div>
+
+        <!-- Link para Login -->
+        <div class="text-center pt-2 border-top">
+          <p class="text-muted small mb-0">
+            Já tem uma conta criada? 
+            <a href="login.html" class="fw-bold text-primary text-decoration-none">
+              Fazer Login <i class="bi bi-box-arrow-in-right"></i>
+            </a>
+          </p>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <!-- Rodapé Simples -->
+  <footer class="py-3 text-center text-muted small border-top bg-white">
+    <div class="container">
+      &copy; 2026 Gás-Fácil Angola — Entrega de Gás Butano ao Domicílio.
+    </div>
+  </footer>
+
+  <!-- Scripts Necessários -->
+  <script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/services/storage.js"></script>
+  <script src="assets/js/services/seedData.js"></script>
+  <script src="assets/js/services/authService.js"></script>
+  <script src="assets/js/utils/themeSwitcher.js"></script>
+  <script src="assets/js/pages/auth.js"></script>
+</body>
+</html>

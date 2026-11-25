@@ -86,12 +86,17 @@
             </div>
 
             <!-- Botões de Acesso -->
-            <a href="login.html" class="btn btn-outline-secondary btn-sm px-3 fw-semibold">
-              <i class="bi bi-person me-1" aria-hidden="true"></i>Entrar
-            </a>
-            <a href="#precario" class="btn btn-primary btn-sm px-3 fw-semibold shadow-sm">
-              <i class="bi bi-cart-check me-1" aria-hidden="true"></i>Pedir Gás
-            </a>
+            <div id="navAuthButtons" class="d-flex align-items-center gap-2">
+              <a href="login.html" class="btn btn-outline-secondary btn-sm px-3 fw-semibold">
+                <i class="bi bi-person me-1" aria-hidden="true"></i>Entrar
+              </a>
+              <a href="register.html" class="btn btn-outline-primary btn-sm px-3 fw-semibold d-none d-sm-inline-block">
+                <i class="bi bi-person-plus me-1" aria-hidden="true"></i>Cadastrar
+              </a>
+              <a href="#precario" class="btn btn-primary btn-sm px-3 fw-semibold shadow-sm">
+                <i class="bi bi-cart-check me-1" aria-hidden="true"></i>Pedir Gás
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -595,6 +600,7 @@
   <script src="assets/js/utils/themeSwitcher.js"></script>
   <script src="assets/js/services/storage.js"></script>
   <script src="assets/js/services/seedData.js"></script>
+  <script src="assets/js/services/authService.js"></script>
   <script src="assets/js/services/loyaltyService.js"></script>
   <script src="assets/js/services/productService.js"></script>
   <script src="assets/js/pages/home.js"></script>
