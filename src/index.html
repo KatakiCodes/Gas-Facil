@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="pt" data-theme="blue">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gás-Fácil — Entrega Rápida de Gás no teu Cúbico em Luanda</title>
+  <meta name="description" content="Plataforma de entrega rápida de gás butano ao domicílio em Luanda. Conheça o exclusivo Programa de Fidelidade com a função Gás Bazou (Kilape emergencial).">
+
+  <!-- Bootstrap 5.3 Local -->
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  
+  <!-- Bootstrap Icons Local -->
+  <link rel="stylesheet" href="assets/css/bootstrap-icons.min.css">
+  
+  <!-- Variáveis de Tema (White-label das Botijas em Angola) -->
+  <link rel="stylesheet" href="assets/css/theme.css">
+  
+  <!-- Estilos Personalizados e Seguros -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+
+  <!-- Aplicação imediata do tema para evitar oscilação visual -->
+  <script>
+    (function() {
+      try {
+        var savedTheme = localStorage.getItem('gf_theme') || 'blue';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       BARRA DE NAVEGAÇÃO PRINCIPAL (NAVBAR)
+       ========================================================================== -->
+  <header class="sticky-top gf-navbar">
+    <nav class="navbar navbar-expand-lg navbar-light py-2">
+      <div class="container">
+        <!-- Logo e Identidade -->
+        <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+          <div class="gf-logo-badge shadow-sm">
+            <i class="bi bi-fuel-pump-fill" aria-hidden="true"></i>
+          </div>
+          <div>
+            <span class="fs-4 fw-bold text-dark d-block lh-1">Gás-Fácil</span>
+            <small class="text-muted" style="font-size: 0.75rem;">Entrega no teu cúbico</small>
+          </div>
+        </a>
+
+        <!-- Botão Menu Mobile -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Abrir menu de navegação">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Links e Ações -->
+        <div class="collapse navbar-collapse" id="navbarMain">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" href="#como-funciona">Como Funciona</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-semibold text-primary" href="#diferencial-bazou">
+                <i class="bi bi-lightning-charge-fill me-1" aria-hidden="true"></i>Gás Bazou
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" href="#precario">Preçário</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" href="#cobertura">Onde Entregamos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" href="#faq">Dúvidas</a>
+            </li>
+          </ul>
+
+          <!-- Lado Direito: Seletor de Tema das Botijas & Autenticação -->
+          <div class="d-flex flex-wrap align-items-center gap-2">
+            <!-- Seletor Cromático das Botijas (Azul, Verde, Laranja, Amarela) -->
+            <div class="gf-theme-selector" title="Escolha a cor da sua botija/marca de preferência">
+              <small class="text-muted fw-bold me-1 d-none d-sm-inline" style="font-size: 0.75rem;">Botija:</small>
+              <button type="button" class="gf-theme-dot" data-set-theme="blue" title="Azul (Padrão Sonangol)" aria-label="Tema Azul"></button>
+              <button type="button" class="gf-theme-dot" data-set-theme="green" title="Verde (PumanGás)" aria-label="Tema Verde"></button>
+              <button type="button" class="gf-theme-dot" data-set-theme="orange" title="Laranja (TotalEnergies)" aria-label="Tema Laranja"></button>
+              <button type="button" class="gf-theme-dot" data-set-theme="yellow" title="Amarela (Galp/Regional)" aria-label="Tema Amarela"></button>
+            </div>
+
+            <!-- Botões de Acesso -->
+            <a href="login.html" class="btn btn-outline-secondary btn-sm px-3 fw-semibold">
+              <i class="bi bi-person me-1" aria-hidden="true"></i>Entrar
+            </a>
+            <a href="#precario" class="btn btn-primary btn-sm px-3 fw-semibold shadow-sm">
+              <i class="bi bi-cart-check me-1" aria-hidden="true"></i>Pedir Gás
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ==========================================================================
+         HERO SECTION (Com imagem de fundo e filtro de desfoque preto elegante)
+         ========================================================================== -->
+    <section class="gf-hero-section">
+      <!-- Imagem de fundo com filtro de desfoque preto -->
+      <div class="gf-hero-bg" aria-hidden="true"></div>
+      <div class="gf-hero-overlay" aria-hidden="true"></div>
+
+      <div class="container gf-hero-content">
+        <div class="row align-items-center gy-4">
+          <!-- Coluna de Texto e CTAs -->
+          <div class="col-lg-7">
+            <div class="d-inline-flex align-items-center gap-2 px-3 py-1 bg-white bg-opacity-10 border border-white border-opacity-25 rounded-pill mb-3 text-white">
+              <i class="bi bi-shield-check text-warning" aria-hidden="true"></i>
+              <span class="small fw-semibold">Entrega rápida e segura no teu cúbico em toda Luanda</span>
+            </div>
+
+            <h1 class="display-5 fw-bold text-white lh-tight mb-3">
+              O gás de cozinha no teu cúbico, sem filas e com entrega em minutos.
+            </h1>
+
+            <p class="lead text-white-50 mb-4">
+              Não perca tempo a carregar botijão pesado ou a ligar para revendedores sem certeza. No <strong>Gás-Fácil</strong>, você escolhe a marca da sua botija, acompanha o estafeta em tempo real e ainda conta com o crédito emergencial <strong>Gás Bazou</strong> quando for apanhado de surpresa.
+            </p>
+
+            <div class="d-flex flex-wrap gap-3 mb-4">
+              <a href="#precario" class="btn btn-primary btn-lg px-4 py-3 fw-bold shadow">
+                <i class="bi bi-cart-plus me-2" aria-hidden="true"></i>Pedir Recarga Agora
+              </a>
+              <a href="#diferencial-bazou" class="btn btn-outline-light btn-lg px-4 py-3 fw-bold">
+                <i class="bi bi-lightning-charge me-2" aria-hidden="true"></i>Conhecer o "Gás Bazou"
+              </a>
+            </div>
+
+            <!-- Benefícios Rápidos -->
+            <div class="row g-3 pt-2 text-white">
+              <div class="col-sm-4">
+                <div class="d-flex align-items-center gap-2">
+                  <i class="bi bi-stopwatch fs-4 text-warning" aria-hidden="true"></i>
+                  <div>
+                    <strong class="d-block small text-white">Média de 30 min</strong>
+                    <span class="text-white-50 small">Estafeta veloz</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="d-flex align-items-center gap-2">
+                  <i class="bi bi-arrow-left-right fs-4 text-warning" aria-hidden="true"></i>
+                  <div>
+                    <strong class="d-block small text-white">Troca Universal</strong>
+                    <span class="text-white-50 small">Todas as marcas</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="d-flex align-items-center gap-2">
+                  <i class="bi bi-credit-card-2-front fs-4 text-warning" aria-hidden="true"></i>
+                  <div>
+                    <strong class="d-block small text-white">Pague na Entrega</strong>
+                    <span class="text-white-50 small">Dinheiro ou TPA</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Coluna Visual: Ilustração da Botija Temática Interativa -->
+          <div class="col-lg-5 text-center">
+            <div class="card border-0 p-4 bg-white shadow-lg rounded-4 position-relative mx-auto" style="max-width: 420px;">
+              <div class="badge bg-light text-muted border position-absolute top-0 start-50 translate-middle px-3 py-2 rounded-pill shadow-sm">
+                Marca Ativa: <span id="heroBottleBrandName" class="fw-bold text-primary">Azul Sonangol</span>
+              </div>
+
+              <div class="py-4 my-2">
+                <!-- SVG Dinâmico da Botija -->
+                <svg class="gf-cylinder-svg mx-auto" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg" style="width: 140px; height: 180px;">
+                  <rect x="28" y="6" width="44" height="14" rx="4" class="gf-cylinder-collar" />
+                  <rect x="42" y="1" width="16" height="8" rx="2" fill="#64748b" />
+                  <path d="M 18,30 C 18,18 82,18 82,30 L 82,106 C 82,120 18,120 18,106 Z" class="gf-cylinder-body" />
+                  <ellipse cx="50" cy="116" rx="24" ry="7" class="gf-cylinder-collar" />
+                  <circle cx="50" cy="65" r="18" fill="#ffffff" opacity="0.25" />
+                  <text x="50" y="71" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">13 kg</text>
+                </svg>
+              </div>
+
+              <div class="bg-light p-3 rounded-3 text-start mb-3 border">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <span class="small fw-semibold text-dark">Recarga Botija 13kg</span>
+                  <span id="heroBottlePrice" class="fw-bold text-primary fs-5">3.500,00 Kz</span>
+                </div>
+                <small class="text-muted d-block">Preço da cor selecionada. Testado contra fugas e calibrado.</small>
+              </div>
+
+              <a href="#precario" class="btn btn-primary w-100 py-2 fw-semibold shadow-sm">
+                <i class="bi bi-bag-check me-1" aria-hidden="true"></i>Pedir Esta Botija
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SEÇÃO DESTAQUE DO DIFERENCIAL: "GÁS BAZOU" (O KILAPE CONSCIENTE)
+         ========================================================================== -->
+    <section id="diferencial-bazou" class="py-5 bg-white border-bottom">
+      <div class="container">
+        <!-- Cabeçalho da Seção -->
+        <div class="row justify-content-center text-center mb-5">
+          <div class="col-lg-8">
+            <span class="gf-badge-bazou d-inline-block mb-2">
+              <i class="bi bi-star-fill me-1" aria-hidden="true"></i>Diferencial Único no Mercado
+            </span>
+            <h2 class="h1 fw-bold text-dark">
+              Acabou o gás no meio da refeição e estás sem saldo?
+            </h2>
+            <p class="lead text-muted">
+              Nas outras plataformas, sem dinheiro na hora você não cozinha. No <strong>Gás-Fácil</strong> você tem o <strong>"Gás Bazou"</strong>: nosso programa de fidelidade permite pedir a botija no <strong>Kilape</strong> e pagar depois com prazo estipulado!
+            </p>
+          </div>
+        </div>
+
+        <!-- Quadro Comparativo: Concorrência vs Gás-Fácil -->
+        <div class="row g-4 align-items-stretch mb-5">
+          <!-- Coluna Concorrentes -->
+          <div class="col-md-6">
+            <div class="card h-100 border p-4 bg-light">
+              <div class="d-flex align-items-center gap-2 mb-3">
+                <i class="bi bi-x-circle-fill text-danger fs-3" aria-hidden="true"></i>
+                <h3 class="h5 fw-bold text-dark mb-0">Como Funciona na Concorrência</h3>
+              </div>
+              <ul class="list-unstyled mb-0 d-flex flex-column gap-3 text-muted">
+                <li class="d-flex align-items-start gap-2">
+                  <i class="bi bi-dash-circle text-danger mt-1" aria-hidden="true"></i>
+                  <span><strong>Estritamente transacional:</strong> Exige pagamento imediato em dinheiro vivo ou TPA no segundo em que o estafeta chega.</span>
+                </li>
+                <li class="d-flex align-items-start gap-2">
+                  <i class="bi bi-dash-circle text-danger mt-1" aria-hidden="true"></i>
+                  <span><strong>Sem crédito ou confiança:</strong> Se o salário ainda não caiu ou o gás "bazou" à meia-noite, a comida fica crua no fogão.</span>
+                </li>
+                <li class="d-flex align-items-start gap-2">
+                  <i class="bi bi-dash-circle text-danger mt-1" aria-hidden="true"></i>
+                  <span><strong>Sem recompensa por lealdade:</strong> Não importa se já comprou 50 botijões no mesmo local, o tratamento é sempre de um estranho.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Coluna Gás-Fácil (O Nosso Diferencial) -->
+          <div class="col-md-6">
+            <div class="card h-100 gf-card-bazou p-4 shadow-sm">
+              <div class="d-flex align-items-center gap-2 mb-3">
+                <i class="bi bi-check-circle-fill text-primary fs-3" aria-hidden="true"></i>
+                <h3 class="h5 fw-bold text-dark mb-0">O Jeito Gás-Fácil (Gás Bazou)</h3>
+              </div>
+              <ul class="list-unstyled mb-0 d-flex flex-column gap-3 text-dark">
+                <li class="d-flex align-items-start gap-2">
+                  <i class="bi bi-shield-check text-primary mt-1" aria-hidden="true"></i>
+                  <span><strong>Programa de Pontos Automático:</strong> Toda compra realizada e paga no prazo soma pontos de reputação na sua conta.</span>
+                </li>
+                <li class="d-flex align-items-start gap-2">
+                  <i class="bi bi-lightning-charge-fill text-primary mt-1" aria-hidden="true"></i>
+                  <span><strong>Kilape Emergencial Desbloqueável:</strong> Clientes fiéis com pontos suficientes podem acionar o botão "Gás Bazou" e receber o botijão de imediato sem pagar nada na hora.</span>
+                </li>
+                <li class="d-flex align-items-start gap-2">
+                  <i class="bi bi-calendar-event text-primary mt-1" aria-hidden="true"></i>
+                  <span><strong>Prazo Claro de até 15 Dias:</strong> O sistema gera uma data limite amigável para você liquidar a conta pelo app ou na próxima recarga.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Simulador Interativo do "Gás Bazou" -->
+        <div class="card border p-4 bg-light rounded-4 shadow-sm">
+          <div class="row align-items-center gy-3">
+            <div class="col-lg-6">
+              <h3 class="h5 fw-bold text-dark mb-1">
+                <i class="bi bi-calculator text-primary me-2" aria-hidden="true"></i>Simulador de Score de Fidelidade
+              </h3>
+              <p class="text-muted small mb-0">
+                Digite uma pontuação acumulada para ver se o seu perfil já teria direito ao Kilape consciente do "Gás Bazou" (Mínimo: 200 pontos).
+              </p>
+            </div>
+            <div class="col-lg-6">
+              <div class="input-group">
+                <span class="input-group-text bg-white"><i class="bi bi-trophy text-primary"></i></span>
+                <input type="number" id="simPointsInput" class="form-control" placeholder="Ex: 250 pontos" value="250" min="0" max="1000">
+                <button type="button" id="btnSimulateBazou" class="btn btn-primary fw-semibold px-4">
+                  Verificar Elegibilidade
+                </button>
+              </div>
+            </div>
+            <div class="col-12">
+              <div id="simResultContainer" class="d-none"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SEÇÃO DE PREÇÁRIO (CATÁLOGO OFICIAL COM PREÇOS DAS BOTIJAS)
+         ========================================================================== -->
+    <section id="precario" class="py-5 bg-light border-bottom">
+      <div class="container">
+        <!-- Título e Introdução -->
+        <div class="text-center mb-4">
+          <span class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill fw-semibold mb-2">
+            Transparência Total
+          </span>
+          <h2 class="h1 fw-bold text-dark">Preçário Oficial de Gás em Luanda</h2>
+          <p class="text-muted lead mb-2">Preços atualizados com base na cor/marca da botija selecionada.</p>
+          <div class="d-inline-flex align-items-center gap-2 px-3 py-1 bg-white border rounded-pill shadow-sm small text-muted">
+            <i class="bi bi-palette text-primary" aria-hidden="true"></i>
+            <span id="pricingActiveThemeNotice">Preçário ativo para botijas Azul Sonangol (Preço Oficial Subvencionado)</span>
+          </div>
+        </div>
+
+        <!-- Alternador entre Recarga e Botijão Novo -->
+        <div class="d-flex justify-content-center mb-5">
+          <div class="btn-group p-1 bg-white border rounded-pill shadow-sm" role="group" aria-label="Opções de compra">
+            <button type="button" id="btnPricingRefill" class="btn btn-primary rounded-pill px-4 py-2 fw-semibold active">
+              <i class="bi bi-arrow-repeat me-1" aria-hidden="true"></i>Apenas Recarga (Troca de Vasilhame)
+            </button>
+            <button type="button" id="btnPricingComplete" class="btn btn-outline-primary rounded-pill px-4 py-2 fw-semibold">
+              <i class="bi bi-box-seam me-1" aria-hidden="true"></i>Botijão Completo (Comprar Novo)
+            </button>
+          </div>
+        </div>
+
+        <!-- Contêiner dos Cards de Preço (Injetados dinamicamente via home.js) -->
+        <div id="pricingCardsContainer" class="row justify-content-center">
+          <!-- Carregando via JavaScript -->
+          <div class="col-12 text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">A carregar produtos...</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Aviso de Garantia e Pesagem -->
+        <div class="card border bg-white p-3 rounded-3 shadow-sm text-center mx-auto" style="max-width: 720px;">
+          <div class="d-flex flex-wrap align-items-center justify-content-center gap-3 text-muted small">
+            <span><i class="bi bi-check2-circle text-success me-1"></i>Vasilhames inspecionados</span>
+            <span><i class="bi bi-speedometer2 text-primary me-1"></i>Peso aferido e garantido</span>
+            <span><i class="bi bi-shield-check text-primary me-1"></i>Selo de segurança intacto</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SEÇÃO COMO FUNCIONA (FILOSOFIA GÁS NO CÚBICO)
+         ========================================================================== -->
+    <section id="como-funciona" class="py-5 bg-white border-bottom">
+      <div class="container">
+        <div class="text-center mb-5">
+          <span class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill fw-semibold mb-2">Simples e Direto</span>
+          <h2 class="h1 fw-bold text-dark">Como pedir no Gás-Fácil?</h2>
+          <p class="text-muted lead">Em apenas 3 passos o botijão chega à porta do teu cúbico.</p>
+        </div>
+
+        <div class="row g-4">
+          <!-- Passo 1 -->
+          <div class="col-md-4">
+            <div class="card h-100 border p-4 text-center bg-white shadow-sm">
+              <div class="gf-step-number mx-auto mb-3">1</div>
+              <h3 class="h5 fw-bold text-dark mb-2">Escolha a sua Botija</h3>
+              <p class="text-muted small mb-0">
+                Selecione o tamanho desejado (13kg doméstico ou 45kg industrial) e a cor/marca da sua preferência (Sonangol, PumanGás, Total ou Regional).
+              </p>
+            </div>
+          </div>
+
+          <!-- Passo 2 -->
+          <div class="col-md-4">
+            <div class="card h-100 border p-4 text-center bg-white shadow-sm">
+              <div class="gf-step-number mx-auto mb-3">2</div>
+              <h3 class="h5 fw-bold text-dark mb-2">Indique a sua Morada</h3>
+              <p class="text-muted small mb-0">
+                Informe o seu bairro em Luanda e ponto de referência. O sistema calcula a taxa de entrega transparente sem surpresas.
+              </p>
+            </div>
+          </div>
+
+          <!-- Passo 3 -->
+          <div class="col-md-4">
+            <div class="card h-100 border p-4 text-center bg-white shadow-sm">
+              <div class="gf-step-number mx-auto mb-3">3</div>
+              <h3 class="h5 fw-bold text-dark mb-2">Receba e Pague</h3>
+              <p class="text-muted small mb-0">
+                O estafeta parceiro entrega e testa a instalação. Pague em dinheiro, TPA ou acione o crédito <strong>"Gás Bazou"</strong> se for cliente fiel!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SEÇÃO ÁREAS DE COBERTURA EM LUANDA
+         ========================================================================== -->
+    <section id="cobertura" class="py-5 bg-light border-bottom">
+      <div class="container">
+        <div class="row align-items-center mb-4">
+          <div class="col-md-8">
+            <span class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill fw-semibold mb-2">
+              Zonas Atendidas
+            </span>
+            <h2 class="h2 fw-bold text-dark mb-1">Onde entregamos em Luanda?</h2>
+            <p class="text-muted mb-0">Cobertura ampla nos principais municípios e centralidades da província.</p>
+          </div>
+          <div class="col-md-4 mt-3 mt-md-0">
+            <div class="input-group">
+              <span class="input-group-text bg-white"><i class="bi bi-search text-muted"></i></span>
+              <input type="text" id="coverageSearch" class="form-control" placeholder="Buscar meu bairro...">
+            </div>
+          </div>
+        </div>
+
+        <!-- Lista dinâmica de bairros -->
+        <div id="coverageList" class="row">
+          <!-- Carregando via JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SEÇÃO DE PERGUNTAS FREQUENTES (FAQ)
+         ========================================================================== -->
+    <section id="faq" class="py-5 bg-white border-bottom">
+      <div class="container" style="max-width: 860px;">
+        <div class="text-center mb-5">
+          <span class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill fw-semibold mb-2">Tire as suas Dúvidas</span>
+          <h2 class="h1 fw-bold text-dark">Perguntas Frequentes</h2>
+          <p class="text-muted">Tudo o que você precisa saber antes de fazer o seu pedido.</p>
+        </div>
+
+        <div class="accordion shadow-sm rounded-3" id="faqAccordion">
+          <!-- Item 1 -->
+          <div class="accordion-item">
+            <h3 class="accordion-header" id="headingOne">
+              <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Posso trocar uma botija de uma marca por outra?
+              </button>
+            </h3>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+              <div class="accordion-body text-muted">
+                Sim! Em Angola, os vasilhames de 13kg padrão são universalmente compatíveis. Você pode entregar uma botija vazia de qualquer distribuidora credenciada (Sonangol, PumanGás, Total ou Galp) e receber uma recarga perfeitamente selada e calibrada.
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="accordion-item">
+            <h3 class="accordion-header" id="headingTwo">
+              <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                Como funciona o crédito do "Gás Bazou" (Kilape)?
+              </button>
+            </h3>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+              <div class="accordion-body text-muted">
+                O "Gás Bazou" é o nosso programa de lealdade e confiança. Cada vez que você faz um pedido no Gás-Fácil e paga em dia, acumula pontos de fidelidade. Ao atingir 200 pontos (Nível Prata), você desbloqueia a opção de pedir gás sem pagar no momento, com até <strong>15 dias de prazo</strong> para quitar. Apenas é permitido 1 Kilape ativo por cliente.
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="accordion-item">
+            <h3 class="accordion-header" id="headingThree">
+              <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                Quais são as formas de pagamento aceites?
+              </button>
+            </h3>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+              <div class="accordion-body text-muted">
+                Aceitamos pagamento na entrega em <strong>dinheiro físico</strong>, <strong>TPA (Multicaixa)</strong>, transferência bancária prévia e, para clientes fiéis elegíveis, a modalidade <strong>"Gás Bazou" (Kilape)</strong>.
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 4 -->
+          <div class="accordion-item">
+            <h3 class="accordion-header" id="headingFour">
+              <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                O estafeta ajuda a instalar a botija no fogão?
+              </button>
+            </h3>
+            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#faqAccordion">
+              <div class="accordion-body text-muted">
+                Com certeza! Todos os nossos entregadores parceiros são treinados para conectar a válvula, trocar a abraçadeira se necessário e realizar o teste de espuma com sabão para atestar ausência total de fuga de gás.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         CALL TO ACTION FINAL (RODAPÉ DE AÇÃO)
+         ========================================================================== -->
+    <section class="py-5 bg-primary text-white text-center">
+      <div class="container">
+        <h2 class="display-6 fw-bold mb-3">Não fiques sem cozinhar. Peça já o teu gás!</h2>
+        <p class="lead mb-4 text-white-50">
+          Entrega veloz, pesagem exata e a tranquilidade de poder contar com o Gás-Fácil em qualquer hora.
+        </p>
+        <a href="#precario" class="btn btn-light btn-lg px-5 py-3 fw-bold text-primary shadow">
+          <i class="bi bi-cart-check-fill me-2" aria-hidden="true"></i>Fazer Meu Pedido Agora
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       RODAPÉ (FOOTER)
+       ========================================================================== -->
+  <footer class="gf-footer py-5">
+    <div class="container">
+      <div class="row g-4 justify-content-between mb-4">
+        <!-- Coluna Institucional -->
+        <div class="col-lg-4">
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <div class="gf-logo-badge">
+              <i class="bi bi-fuel-pump-fill" aria-hidden="true"></i>
+            </div>
+            <span class="fs-4 fw-bold text-white">Gás-Fácil</span>
+          </div>
+          <p class="small text-secondary">
+            Plataforma web de conveniência para fornecimento de gás butano ao domicílio em Luanda, Angola. Transformamos a sua compra de gás em rapidez, segurança e lealdade.
+          </p>
+          <div class="d-flex gap-3 text-secondary">
+            <i class="bi bi-shield-check fs-5" title="Segurança Certificada"></i>
+            <i class="bi bi-truck fs-5" title="Entrega em Luanda"></i>
+            <i class="bi bi-heart-fill fs-5" title="Programa de Fidelidade"></i>
+          </div>
+        </div>
+
+        <!-- Links Rápidos -->
+        <div class="col-sm-6 col-lg-2">
+          <h4 class="h6 text-white text-uppercase fw-bold mb-3">Navegação</h4>
+          <ul class="list-unstyled small d-flex flex-column gap-2">
+            <li><a href="#como-funciona">Como Funciona</a></li>
+            <li><a href="#diferencial-bazou">Programa Gás Bazou</a></li>
+            <li><a href="#precario">Preçário Oficial</a></li>
+            <li><a href="#cobertura">Zonas Atendidas</a></li>
+            <li><a href="#faq">Dúvidas Frequentes</a></li>
+          </ul>
+        </div>
+
+        <!-- Produtos -->
+        <div class="col-sm-6 col-lg-3">
+          <h4 class="h6 text-white text-uppercase fw-bold mb-3">Produtos</h4>
+          <ul class="list-unstyled small d-flex flex-column gap-2">
+            <li><a href="#precario">Recarga Botija 13kg (3.500 Kz)</a></li>
+            <li><a href="#precario">Cilindro Industrial 45kg</a></li>
+            <li><a href="#precario">Botijas Novas (Vasilhame Completo)</a></li>
+            <li><a href="#precario">Válvulas e Reguladores</a></li>
+          </ul>
+        </div>
+
+        <!-- Contacto e Suporte -->
+        <div class="col-lg-3">
+          <h4 class="h6 text-white text-uppercase fw-bold mb-3">Apoio ao Cliente</h4>
+          <p class="small text-secondary mb-2">
+            <i class="bi bi-geo-alt me-2 text-primary"></i>Luanda, Angola
+          </p>
+          <p class="small text-secondary mb-2">
+            <i class="bi bi-telephone me-2 text-primary"></i>+244 923 000 000
+          </p>
+          <p class="small text-secondary mb-3">
+            <i class="bi bi-envelope me-2 text-primary"></i>suporte@gasfacil.ao
+          </p>
+          <span class="badge bg-secondary-subtle text-secondary small">
+            Atendimento: Seg a Dom, 07:00 às 20:00
+          </span>
+        </div>
+      </div>
+
+      <hr class="border-secondary my-4">
+
+      <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 small text-secondary">
+        <div>
+          &copy; 2026 Gás-Fácil Angola. Todos os direitos reservados.
+        </div>
+        <div>
+          Inspirado na facilidade de entrega ao cúbico com respeito às normas de segurança da ANPG e IRSEA.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap 5 Bundle JS Local (com Popper) -->
+  <script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
+
+  <!-- Scripts do Gás-Fácil (Vanilla JS compatível tanto com file:/// quanto com servidores HTTP) -->
+  <script src="assets/js/utils/formatters.js"></script>
+  <script src="assets/js/utils/themeSwitcher.js"></script>
+  <script src="assets/js/services/storage.js"></script>
+  <script src="assets/js/services/seedData.js"></script>
+  <script src="assets/js/services/loyaltyService.js"></script>
+  <script src="assets/js/services/productService.js"></script>
+  <script src="assets/js/pages/home.js"></script>
+</body>
+</html>
