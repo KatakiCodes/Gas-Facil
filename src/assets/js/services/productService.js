@@ -30,7 +30,7 @@ window.GasFacil.productService = {
    */
   getPrice(product, theme, type = 'refill') {
     if (!product) return 0;
-    const currentTheme = theme || localStorage.getItem('gf_theme') || 'blue';
+    const currentTheme = theme || (window.GasFacil.themeSwitcher ? window.GasFacil.themeSwitcher.getCurrentTheme() : 'blue');
 
     if (product.pricesByColor && product.pricesByColor[currentTheme]) {
       return product.pricesByColor[currentTheme][type] || product.refillPrice;

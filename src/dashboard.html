@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt" data-theme="blue">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel do Cliente — Gás-Fácil</title>
+  <meta name="description" content="Acompanhe os seus pedidos, saldo de pontos de fidelidade e crédito emergencial Gás Bazou.">
+
+  <!-- Bootstrap 5.3 Local -->
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  
+  <!-- Bootstrap Icons Local -->
+  <link rel="stylesheet" href="assets/css/bootstrap-icons.min.css">
+  
+  <!-- Variáveis de Tema (White-label das Botijas em Angola) -->
+  <link rel="stylesheet" href="assets/css/theme.css">
+  
+  <!-- Estilos Personalizados e Seguros -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+
+  <!-- Aplicação imediata do tema para evitar oscilação visual -->
+  <script>
+    (function() {
+      try {
+        var savedTheme = localStorage.getItem('gf_theme') || 'blue';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body class="bg-light">
+
+  <!-- ==========================================================================
+       BARRA DE NAVEGAÇÃO DO PAINEL (HEADER)
+       ========================================================================== -->
+  <header class="sticky-top bg-white border-bottom">
+    <nav class="navbar navbar-expand-lg navbar-light py-2">
+      <div class="container">
+        <!-- Logo e Identidade -->
+        <a class="navbar-brand d-flex align-items-center gap-2" href="dashboard.html">
+          <div class="gf-logo-badge shadow-sm">
+            <i class="bi bi-fuel-pump-fill" aria-hidden="true"></i>
+          </div>
+          <div>
+            <span class="fs-4 fw-bold text-dark d-block lh-1">Gás-Fácil</span>
+            <small class="text-muted" style="font-size: 0.75rem;">Painel do Cliente</small>
+          </div>
+        </a>
+
+        <!-- Botão Menu Mobile -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDashboard" aria-controls="navbarDashboard" aria-expanded="false" aria-label="Abrir menu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Links e Ações do Usuário -->
+        <div class="collapse navbar-collapse" id="navbarDashboard">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-3">
+            <li class="nav-item">
+              <a class="nav-link active fw-semibold" href="dashboard.html">
+                <i class="bi bi-speedometer2 me-1"></i>Painel
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" href="index.html">
+                <i class="bi bi-house me-1"></i>Página Inicial
+              </a>
+            </li>
+          </ul>
+
+          <div class="d-flex flex-wrap align-items-center gap-3">
+            <!-- Seletor Cromático das Botijas no Painel -->
+            <div class="gf-theme-selector" title="Alterar cor da botija / marca de preferência">
+              <small class="text-muted fw-bold me-1 d-none d-sm-inline" style="font-size: 0.75rem;">Botija:</small>
+              <button type="button" class="gf-theme-dot" data-set-theme="blue" title="Azul (Sonangol)" aria-label="Tema Azul"></button>
+              <button type="button" class="gf-theme-dot" data-set-theme="green" title="Verde (PumanGás)" aria-label="Tema Verde"></button>
+              <button type="button" class="gf-theme-dot" data-set-theme="orange" title="Laranja (TotalEnergies)" aria-label="Tema Laranja"></button>
+              <button type="button" class="gf-theme-dot" data-set-theme="yellow" title="Amarela (Galp/Regional)" aria-label="Tema Amarela"></button>
+            </div>
+
+            <!-- Dados Rápidos do Usuário Logado -->
+            <div class="d-flex align-items-center gap-2 border-start ps-3">
+              <div class="gf-user-avatar shadow-sm" id="userInitials">MD</div>
+              <div class="d-none d-md-block lh-sm">
+                <div class="fw-bold text-dark small" data-bind="userName">Manuel Domingos</div>
+                <small class="text-muted" id="userTierBadge">Nível Prata</small>
+              </div>
+            </div>
+
+            <!-- Botão de Sair (Logout) -->
+            <button type="button" class="btn btn-outline-danger btn-sm px-3" data-action="logout" title="Terminar sessão">
+              <i class="bi bi-box-arrow-right me-1"></i>Sair
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ==========================================================================
+       CONTEÚDO PRINCIPAL DO PAINEL
+       ========================================================================== -->
+  <main class="py-4">
+    <div class="container">
+
+      <!-- Cabeçalho de Boas-vindas & CTA Novo Pedido -->
+      <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+        <div>
+          <h1 class="h3 fw-bold text-dark mb-1">
+            Olá, <span data-bind="userName" class="text-primary">Cliente</span>!
+          </h1>
+          <p class="text-muted small mb-0">
+            Acompanhe aqui o estado das suas entregas, saldo de pontos e histórico de consumo.
+          </p>
+        </div>
+        <div>
+          <button type="button" class="btn btn-primary fw-semibold px-4 py-2 shadow-sm" data-bs-toggle="modal" data-bs-target="#modalNewOrder">
+            <i class="bi bi-cart-plus me-2"></i>Fazer Novo Pedido
+          </button>
+        </div>
+      </div>
+
+      <!-- Grid de Indicadores (Fidelidade & Gás Bazou) -->
+      <div class="row g-3 mb-4">
+        <!-- 1. Pontos de Fidelidade -->
+        <div class="col-md-4">
+          <div class="gf-stat-card shadow-sm h-100">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <span class="text-muted small fw-semibold">Pontos de Fidelidade</span>
+              <div class="gf-stat-icon bg-primary-subtle text-primary">
+                <i class="bi bi-trophy-fill"></i>
+              </div>
+            </div>
+            <div class="d-flex align-items-baseline gap-2">
+              <span class="fs-2 fw-bold text-dark" id="userPoints">0</span>
+              <span class="text-muted small">pontos acumulados</span>
+            </div>
+            <div class="small text-muted mt-2">
+              Ganhe 1 ponto a cada 50 Kz em compras no Gás-Fácil.
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Status do Diferencial: "Gás Bazou" (Kilape) -->
+        <div class="col-md-8">
+          <div class="gf-stat-card shadow-sm h-100">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <span class="text-muted small fw-semibold">
+                <i class="bi bi-lightning-charge-fill text-warning me-1"></i>Crédito Emergencial (Gás Bazou)
+              </span>
+              <span class="badge bg-light text-dark border">Exclusivo em Angola</span>
+            </div>
+            <div id="bazouStatusContainer">
+              <!-- Renderizado dinamicamente por dashboard.js -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEÇÃO 1: RASTREAMENTO DO PEDIDO ATIVO (LIVE TRACKING) -->
+      <div class="mb-4">
+        <h2 class="h5 fw-bold text-dark mb-3">
+          <i class="bi bi-geo-alt-fill text-primary me-2"></i>Estado do Pedido em Andamento
+        </h2>
+        <div id="activeOrderSection">
+          <!-- Renderizado dinamicamente por dashboard.js -->
+        </div>
+      </div>
+
+      <!-- SEÇÃO 2: HISTÓRICO DE PEDIDOS ANTERIORES -->
+      <div class="card border bg-white shadow-sm">
+        <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center flex-wrap gap-2">
+          <h2 class="h5 fw-bold text-dark mb-0">
+            <i class="bi bi-clock-history text-primary me-2"></i>Histórico de Pedidos
+          </h2>
+          <span class="small text-muted">Acesso rápido aos seus comprovativos e repetição de pedidos</span>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="table-light text-muted small text-uppercase">
+              <tr>
+                <th scope="col">ID Pedido</th>
+                <th scope="col">Data</th>
+                <th scope="col">Botija / Produto</th>
+                <th scope="col">Total (Kz)</th>
+                <th scope="col">Estado</th>
+                <th scope="col" class="text-end">Ação</th>
+              </tr>
+            </thead>
+            <tbody id="ordersHistoryTableBody" class="small">
+              <!-- Renderizado dinamicamente por dashboard.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       MODAL DE NOVO PEDIDO (RÁPIDO E INTUITIVO)
+       ========================================================================== -->
+  <div class="modal fade" id="modalNewOrder" tabindex="-1" aria-labelledby="modalNewOrderLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow">
+        <div class="modal-header border-bottom">
+          <h5 class="modal-title fw-bold text-dark" id="modalNewOrderLabel">
+            <i class="bi bi-cart-plus text-primary me-2"></i>Solicitar Botija de Gás
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        
+        <form id="formCreateOrder" class="needs-validation" novalidate>
+          <div class="modal-body p-4">
+            
+            <!-- Aviso da Marca / Cor Selecionada -->
+            <div class="alert alert-light border d-flex align-items-center justify-content-between py-2 px-3 mb-3 small">
+              <div>
+                <i class="bi bi-tag-fill text-primary me-1"></i>Cor / Marca Ativa:
+                <strong id="orderSummaryBrand" class="text-primary ms-1">Azul (Sonangol Gás)</strong>
+              </div>
+              <small class="text-muted">(Pode alterar no topo)</small>
+            </div>
+
+            <!-- Seleção do Botijão -->
+            <div class="mb-3">
+              <label for="orderProductSelect" class="form-label fw-semibold small text-dark">
+                Tamanho da Botija
+              </label>
+              <select class="form-select" id="orderProductSelect">
+                <option value="botija-13kg" selected>Botijão de Gás Butano 13kg (Doméstico)</option>
+                <option value="botija-45kg">Cilindro Industrial 45kg (Comercial)</option>
+                <option value="kit-seguranca">Kit Válvula Reguladora + Mangueira</option>
+              </select>
+            </div>
+
+            <!-- Tipo de Compra (Recarga ou Completo) -->
+            <div class="mb-3">
+              <label for="orderTypeSelect" class="form-label fw-semibold small text-dark">
+                Modalidade de Compra
+              </label>
+              <select class="form-select" id="orderTypeSelect">
+                <option value="refill" selected>Apenas Recarga (Troca de Vasilhame Vazio)</option>
+                <option value="complete">Botija Completa (Compra com Vasilhame Novo)</option>
+              </select>
+            </div>
+
+            <!-- Zona de Luanda -->
+            <div class="mb-3">
+              <label for="orderZoneSelect" class="form-label fw-semibold small text-dark">
+                Zona de Entrega em Luanda
+              </label>
+              <select class="form-select" id="orderZoneSelect">
+                <option value="Talatona" selected>Talatona (Taxa: 1.000 Kz)</option>
+                <option value="Maianga / Alvalade">Maianga / Alvalade (Taxa: 1.000 Kz)</option>
+                <option value="Luanda Centro / Ingombota">Luanda Centro / Ingombota (Taxa: 1.000 Kz)</option>
+                <option value="Centralidade do Kilamba">Centralidade do Kilamba (Taxa: 1.500 Kz)</option>
+                <option value="Belas / Benfica / Morro Bento">Belas / Benfica / Morro Bento (Taxa: 1.200 Kz)</option>
+                <option value="Viana / Zango">Viana / Zango (Taxa: 1.500 Kz)</option>
+              </select>
+            </div>
+
+            <!-- Endereço Específico -->
+            <div class="mb-3">
+              <label for="orderAddressInput" class="form-label fw-semibold small text-dark">
+                Rua / Número da Casa / Bairro
+              </label>
+              <input type="text" class="form-control" id="orderAddressInput" placeholder="Ex: Rua das Acácias, Casa 45" required>
+            </div>
+
+            <!-- Forma de Pagamento -->
+            <div class="mb-3">
+              <label for="orderPaymentSelect" class="form-label fw-semibold small text-dark">
+                Forma de Pagamento
+              </label>
+              <select class="form-select" id="orderPaymentSelect">
+                <option value="cash_delivery" selected>Dinheiro na Entrega</option>
+                <option value="tpa_delivery">Cartão / TPA Móvel na Entrega</option>
+                <option value="kilape_bazou">Gás Bazou (Kilape Emergencial a Prazo)</option>
+              </select>
+            </div>
+
+            <!-- Aviso Explicativo do Kilape -->
+            <div id="orderKilapeNotice" class="alert alert-warning py-2 px-3 small d-none mb-3">
+              <i class="bi bi-info-circle-fill me-1"></i>
+              <strong>Modo Gás Bazou Selecionado:</strong> O botijão será entregue sem pagamento imediato. Terá até 30 dias para quitar o valor acrescido da taxa de 5% de tolerância.
+            </div>
+
+            <!-- Resumo Financeiro -->
+            <div class="p-3 bg-light rounded border d-flex justify-content-between align-items-center">
+              <div>
+                <span class="text-muted small d-block">Total Estimado (com taxa de entrega):</span>
+                <strong class="fs-4 text-success" id="orderSummaryTotal">4.500,00 Kz</strong>
+              </div>
+              <span class="badge bg-success text-white px-2 py-1">Entrega Rápida</span>
+            </div>
+
+          </div>
+          <div class="modal-footer border-top">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" id="btnSubmitOrder" class="btn btn-primary fw-semibold px-4">
+              <i class="bi bi-check-circle me-1"></i>Confirmar Pedido
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rodapé -->
+  <footer class="py-3 text-center text-muted small border-top bg-white mt-auto">
+    <div class="container">
+      &copy; 2026 Gás-Fácil Angola — Entrega de Gás Butano ao Domicílio no teu Cúbico.
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/services/storage.js"></script>
+  <script src="assets/js/services/seedData.js"></script>
+  <script src="assets/js/services/authService.js"></script>
+  <script src="assets/js/services/productService.js"></script>
+  <script src="assets/js/services/loyaltyService.js"></script>
+  <script src="assets/js/services/orderService.js"></script>
+  <script src="assets/js/utils/formatters.js"></script>
+  <script src="assets/js/utils/themeSwitcher.js"></script>
+  <script src="assets/js/pages/dashboard.js"></script>
+</body>
+</html>
