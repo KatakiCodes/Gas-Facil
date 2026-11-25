@@ -16,11 +16,13 @@ window.GasFacil.orderService = {
 
     const storage = window.GasFacil.storage;
     if (!storage.has(this.ORDERS_KEY)) {
-      // Pedidos de demonstração iniciais para o usuário demo (Manuel Domingos)
+      // Pedidos iniciais registrados no sistema
       const initialOrders = [
         {
           id: 'ORD-2026-092',
-          userId: 'usr_demo_01',
+          userId: 'usr_cliente_01',
+          customerName: 'Manuel Domingos',
+          customerPhone: '+244 923 123 456',
           productName: 'Botijão de Gás Butano 13kg',
           productId: 'botija-13kg',
           cylinderColor: 'blue',
@@ -30,7 +32,7 @@ window.GasFacil.orderService = {
           unitPrice: 3500,
           deliveryFee: 1000,
           totalAmount: 4500,
-          paymentMethod: 'cash_delivery', // 'cash_delivery', 'tpa_delivery', 'kilape_bazou'
+          paymentMethod: 'cash_delivery',
           isKilape: false,
           status: 'in_transit', // 'received', 'preparing', 'in_transit', 'delivered', 'cancelled'
           statusLabel: 'A Caminho',
@@ -45,12 +47,14 @@ window.GasFacil.orderService = {
             vehicle: 'Moto Triciclo LD-45-89-GH'
           },
           estimatedMinutes: 20,
-          createdAt: new Date(Date.now() - 25 * 60 * 1000).toISOString(), // 25 min atrás
+          createdAt: new Date(Date.now() - 25 * 60 * 1000).toISOString(),
           updatedAt: new Date().toISOString()
         },
         {
           id: 'ORD-2026-051',
-          userId: 'usr_demo_01',
+          userId: 'usr_cliente_01',
+          customerName: 'Manuel Domingos',
+          customerPhone: '+244 923 123 456',
           productName: 'Botijão de Gás Butano 13kg',
           productId: 'botija-13kg',
           cylinderColor: 'blue',
@@ -74,12 +78,14 @@ window.GasFacil.orderService = {
             phone: '+244 931 555 444',
             vehicle: 'Carrinha LD-12-34-AB'
           },
-          createdAt: new Date(Date.now() - 28 * 24 * 60 * 60 * 1000).toISOString(), // 28 dias atrás
+          createdAt: new Date(Date.now() - 28 * 24 * 60 * 60 * 1000).toISOString(),
           deliveredAt: new Date(Date.now() - 28 * 24 * 60 * 60 * 1000 + 40 * 60 * 1000).toISOString()
         },
         {
           id: 'ORD-2026-018',
-          userId: 'usr_demo_01',
+          userId: 'usr_cliente_02',
+          customerName: 'Maria Silva',
+          customerPhone: '+244 923 000 000',
           productName: 'Kit Válvula Reguladora + Mangueira',
           productId: 'kit-seguranca',
           cylinderColor: 'blue',
@@ -94,9 +100,9 @@ window.GasFacil.orderService = {
           status: 'delivered',
           statusLabel: 'Entregue',
           deliveryAddress: {
-            zone: 'Talatona',
-            street: 'Rua das Acácias, Casa 45',
-            reference: 'Perto do Kero Talatona'
+            zone: 'Maianga',
+            street: 'Rua Principal, 123',
+            reference: 'Próximo à padaria'
           },
           createdAt: new Date(Date.now() - 65 * 24 * 60 * 60 * 1000).toISOString(),
           deliveredAt: new Date(Date.now() - 65 * 24 * 60 * 60 * 1000 + 35 * 60 * 1000).toISOString()
@@ -140,10 +146,14 @@ window.GasFacil.orderService = {
     this.init();
     const orders = this.getAllOrders();
 
+    const currentUser = window.GasFacil.authService ? window.GasFacil.authService.getCurrentUser() : null;
+
     const orderNumber = Math.floor(100 + Math.random() * 900);
     const newOrder = {
       id: `ORD-2026-${orderNumber}`,
       userId: orderData.userId,
+      customerName: orderData.customerName || (currentUser ? currentUser.name : 'Cliente Gás-Fácil'),
+      customerPhone: orderData.customerPhone || (currentUser ? currentUser.phone : ''),
       productName: orderData.productName || 'Botijão de Gás Butano 13kg',
       productId: orderData.productId || 'botija-13kg',
       cylinderColor: orderData.cylinderColor || 'blue',
@@ -200,5 +210,70 @@ window.GasFacil.orderService = {
     }
 
     return Promise.resolve(newOrder);
+  },
+
+  /**
+   * Obtém um pedido específico pelo seu ID
+   */
+  async getOrderById(orderId) {
+    this.init();
+    const orders = this.getAllOrders();
+    const order = orders.find(o => o.id === orderId);
+    return Promise.resolve(order || null);
+  },
+
+  /**
+   * Atualiza o estado de um pedido (Usado pelo Gestor)
+   * Estados válidos: 'received', 'preparing', 'in_transit', 'delivered', 'cancelled'
+   */
+  async updateOrderStatus(orderId, newStatus) {
+    this.init();
+    const orders = this.getAllOrders();
+    const order = orders.find(o => o.id === orderId);
+
+    if (!order) {
+      return Promise.resolve({
+        success: false,
+        message: 'Pedido não encontrado.'
+      });
+    }
+
+    const validStatuses = ['received', 'preparing', 'in_transit', 'delivered', 'cancelled'];
+    if (!validStatuses.includes(newStatus)) {
+      return Promise.resolve({
+        success: false,
+        message: 'Estado de pedido inválido.'
+      });
+    }
+
+    const statusLabels = {
+      received: 'Recebido',
+      preparing: 'Em Preparação',
+      in_transit: 'A Caminho',
+      delivered: 'Entregue',
+      cancelled: 'Cancelado'
+    };
+
+    order.status = newStatus;
+    order.statusLabel = statusLabels[newStatus];
+    order.updatedAt = new Date().toISOString();
+
+    if (newStatus === 'delivered') {
+      order.deliveredAt = new Date().toISOString();
+    }
+
+    order.statusHistory = order.statusHistory || [];
+    order.statusHistory.push({
+      status: newStatus,
+      statusLabel: statusLabels[newStatus],
+      timestamp: new Date().toISOString()
+    });
+
+    window.GasFacil.storage.set(this.ORDERS_KEY, orders);
+
+    return Promise.resolve({
+      success: true,
+      order
+    });
   }
 };

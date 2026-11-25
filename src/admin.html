@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="pt" data-theme="blue">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel do Gestor — Gás-Fácil</title>
+  <meta name="description" content="Gestão centralizada de pedidos, entregas e atualização de estados do sistema Gás-Fácil.">
+
+  <!-- Bootstrap 5.3 Local -->
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  
+  <!-- Bootstrap Icons Local -->
+  <link rel="stylesheet" href="assets/css/bootstrap-icons.min.css">
+  
+  <!-- Variáveis de Tema (White-label das Botijas em Angola) -->
+  <link rel="stylesheet" href="assets/css/theme.css">
+  
+  <!-- Estilos Personalizados e Seguros -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+
+  <!-- Aplicação imediata do tema para evitar oscilação visual -->
+  <script>
+    (function() {
+      try {
+        var savedTheme = localStorage.getItem('gf_theme') || 'blue';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body class="bg-light">
+
+  <!-- ==========================================================================
+       BARRA DE NAVEGAÇÃO DO GESTOR (HEADER)
+       ========================================================================== -->
+  <header class="sticky-top bg-white border-bottom">
+    <nav class="navbar navbar-expand-lg navbar-light py-2">
+      <div class="container-fluid px-lg-4">
+        <!-- Logo e Identidade do Gestor -->
+        <a class="navbar-brand d-flex align-items-center gap-2" href="admin.html">
+          <div class="gf-logo-badge shadow-sm">
+            <i class="bi bi-shield-lock-fill" aria-hidden="true"></i>
+          </div>
+          <div>
+            <div class="d-flex align-items-center gap-2">
+              <span class="fs-4 fw-bold text-dark lh-1">Gás-Fácil</span>
+              <span class="badge bg-dark text-white small" style="font-size: 0.7rem;">Gestor</span>
+            </div>
+            <small class="text-muted" style="font-size: 0.75rem;">Operações & Distribuição</small>
+          </div>
+        </a>
+
+        <!-- Botão Menu Mobile -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarAdmin" aria-controls="navbarAdmin" aria-expanded="false" aria-label="Abrir menu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Ações e Perfil do Gestor -->
+        <div class="collapse navbar-collapse" id="navbarAdmin">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-3">
+            <li class="nav-item">
+              <a class="nav-link active fw-semibold" href="admin.html">
+                <i class="bi bi-kanban me-1"></i>Gestão de Pedidos
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" href="index.html">
+                <i class="bi bi-house me-1"></i>Página Inicial
+              </a>
+            </li>
+          </ul>
+
+          <div class="d-flex flex-wrap align-items-center gap-3">
+            <!-- Seletor Cromático das Botijas no Painel -->
+            <div class="gf-theme-selector" title="Alterar cor da botija / tema">
+              <small class="text-muted fw-bold me-1 d-none d-sm-inline" style="font-size: 0.75rem;">Botija:</small>
+              <button type="button" class="gf-theme-dot" data-set-theme="blue" title="Azul (Sonangol)" aria-label="Tema Azul"></button>
+              <button type="button" class="gf-theme-dot" data-set-theme="green" title="Verde (PumanGás)" aria-label="Tema Verde"></button>
+              <button type="button" class="gf-theme-dot" data-set-theme="orange" title="Laranja (TotalEnergies)" aria-label="Tema Laranja"></button>
+              <button type="button" class="gf-theme-dot" data-set-theme="yellow" title="Amarela (Galp/Regional)" aria-label="Tema Amarela"></button>
+            </div>
+
+            <!-- Dados do Gestor -->
+            <div class="d-flex align-items-center gap-2 border-start ps-3">
+              <div class="gf-user-avatar shadow-sm bg-dark text-white" id="adminAvatar">OP</div>
+              <div class="d-none d-md-block lh-sm">
+                <div class="fw-bold text-dark small" id="adminName">Gestor Operacional</div>
+                <small class="text-muted">Acesso Gestor</small>
+              </div>
+            </div>
+
+            <!-- Botão Sair -->
+            <button type="button" class="btn btn-outline-danger btn-sm px-3" data-action="logout" title="Terminar sessão">
+              <i class="bi bi-box-arrow-right me-1"></i>Sair
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ==========================================================================
+       CONTEÚDO PRINCIPAL DO PAINEL DO GESTOR
+       ========================================================================== -->
+  <main class="py-4">
+    <div class="container-fluid px-lg-4">
+
+      <!-- Cabeçalho do Painel -->
+      <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+        <div>
+          <h1 class="h3 fw-bold text-dark mb-1">
+            <i class="bi bi-clipboard2-check text-primary me-2"></i>Controle de Pedidos e Entregas
+          </h1>
+          <p class="text-muted small mb-0">
+            Consulte todas as encomendas em tempo real e altere o estado de entrega dos botijões.
+          </p>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <button type="button" id="btnRefreshOrders" class="btn btn-outline-secondary btn-sm px-3">
+            <i class="bi bi-arrow-clockwise me-1"></i>Atualizar Lista
+          </button>
+        </div>
+      </div>
+
+      <!-- Alerta dinâmico de feedback para o Gestor -->
+      <div id="adminAlert" class="alert d-none py-2 px-3 small d-flex align-items-center mb-4" role="alert"></div>
+
+      <!-- Cards de Métricas Operacionais -->
+      <div class="row g-3 mb-4">
+        <div class="col-sm-6 col-lg-3">
+          <div class="gf-stat-card shadow-sm h-100">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <span class="text-muted small fw-semibold">Total de Pedidos</span>
+              <div class="gf-stat-icon bg-light text-dark">
+                <i class="bi bi-receipt"></i>
+              </div>
+            </div>
+            <div class="fs-2 fw-bold text-dark" id="statTotalOrders">0</div>
+            <div class="small text-muted mt-1">Registrados no sistema</div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+          <div class="gf-stat-card shadow-sm h-100">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <span class="text-muted small fw-semibold">Pendentes / Preparação</span>
+              <div class="gf-stat-icon bg-primary-subtle text-primary">
+                <i class="bi bi-hourglass-split"></i>
+              </div>
+            </div>
+            <div class="fs-2 fw-bold text-primary" id="statPendingOrders">0</div>
+            <div class="small text-muted mt-1">Aguardando saída da base</div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+          <div class="gf-stat-card shadow-sm h-100">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <span class="text-muted small fw-semibold">Em Rota / A Caminho</span>
+              <div class="gf-stat-icon bg-warning bg-opacity-10 text-warning">
+                <i class="bi bi-truck"></i>
+              </div>
+            </div>
+            <div class="fs-2 fw-bold text-warning" id="statInTransitOrders">0</div>
+            <div class="small text-muted mt-1">Estafetas em trânsito</div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+          <div class="gf-stat-card shadow-sm h-100">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <span class="text-muted small fw-semibold">Entregues com Sucesso</span>
+              <div class="gf-stat-icon bg-success bg-opacity-10 text-success">
+                <i class="bi bi-check2-circle"></i>
+              </div>
+            </div>
+            <div class="fs-2 fw-bold text-success" id="statDeliveredOrders">0</div>
+            <div class="small text-muted mt-1">Concluídos e recebidos</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barra de Filtros e Busca -->
+      <div class="card border bg-white shadow-sm mb-4">
+        <div class="card-body p-3">
+          <div class="row g-2 align-items-center">
+            <!-- Filtro de Estado -->
+            <div class="col-md-4 col-lg-3">
+              <label for="filterStatusSelect" class="form-label small text-muted mb-1 fw-semibold">Filtrar por Estado</label>
+              <select class="form-select form-select-sm" id="filterStatusSelect">
+                <option value="all" selected>Todos os Estados</option>
+                <option value="received">Recebido</option>
+                <option value="preparing">Em Preparação</option>
+                <option value="in_transit">A Caminho (Em Rota)</option>
+                <option value="delivered">Entregue</option>
+                <option value="cancelled">Cancelado</option>
+              </select>
+            </div>
+
+            <!-- Busca por Texto -->
+            <div class="col-md-8 col-lg-5">
+              <label for="searchInput" class="form-label small text-muted mb-1 fw-semibold">Buscar Pedido ou Cliente</label>
+              <div class="input-group input-group-sm">
+                <span class="input-group-text bg-light"><i class="bi bi-search"></i></span>
+                <input type="text" class="form-control" id="searchInput" placeholder="Digite ID (ex: ORD-2026), nome ou telefone...">
+              </div>
+            </div>
+
+            <!-- Contador de resultados -->
+            <div class="col-12 col-lg-4 text-lg-end mt-2 mt-lg-4">
+              <span class="small text-muted" id="resultsCount">Carregando pedidos...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabela Central de Pedidos -->
+      <div class="card border bg-white shadow-sm">
+        <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center flex-wrap gap-2">
+          <h2 class="h5 fw-bold text-dark mb-0">
+            <i class="bi bi-list-check text-primary me-2"></i>Pedidos Registrados
+          </h2>
+          <span class="badge bg-light text-dark border">Atualização em tempo real</span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="table-light text-muted small text-uppercase">
+              <tr>
+                <th scope="col">ID Pedido</th>
+                <th scope="col">Data / Hora</th>
+                <th scope="col">Cliente / Contacto</th>
+                <th scope="col">Produto & Marca</th>
+                <th scope="col">Destino / Zona</th>
+                <th scope="col">Total (Kz)</th>
+                <th scope="col">Estado Atual</th>
+                <th scope="col" class="text-end">Ação do Gestor</th>
+              </tr>
+            </thead>
+            <tbody id="adminOrdersTableBody" class="small">
+              <!-- Renderizado dinamicamente por admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       MODAL DE ALTERAÇÃO DE ESTADO DO PEDIDO
+       ========================================================================== -->
+  <div class="modal fade" id="modalChangeStatus" tabindex="-1" aria-labelledby="modalChangeStatusLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow">
+        <div class="modal-header border-bottom">
+          <h5 class="modal-title fw-bold text-dark" id="modalChangeStatusLabel">
+            <i class="bi bi-arrow-repeat text-primary me-2"></i>Alterar Estado do Pedido
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+
+        <form id="formChangeStatus" class="needs-validation" novalidate>
+          <div class="modal-body p-4">
+            <input type="hidden" id="modalOrderId">
+
+            <!-- Resumo do Pedido -->
+            <div class="p-3 bg-light rounded border mb-3">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <strong class="text-dark" id="modalOrderDisplayId">ORD-XXXX</strong>
+                <span class="badge bg-secondary" id="modalOrderCurrentStatusBadge">Estado Atual</span>
+              </div>
+              <div class="small text-muted" id="modalOrderCustomerInfo">Cliente: --</div>
+              <div class="small text-muted" id="modalOrderProductInfo">Produto: --</div>
+            </div>
+
+            <!-- Seleção do Novo Estado -->
+            <div class="mb-3">
+              <label for="selectNewStatus" class="form-label fw-semibold small text-dark">
+                Novo Estado de Operação
+              </label>
+              <select class="form-select" id="selectNewStatus" required>
+                <option value="received">Recebido (Pedido registrado no sistema)</option>
+                <option value="preparing">Em Preparação (Separação na base/depósito)</option>
+                <option value="in_transit">A Caminho (Estafeta em rota para o domicílio)</option>
+                <option value="delivered">Entregue (Botijão entregue e concluído)</option>
+                <option value="cancelled">Cancelado (Pedido cancelado/estornado)</option>
+              </select>
+              <div class="form-text text-muted" style="font-size: 0.75rem;">
+                A alteração atualiza a linha do tempo no painel do cliente imediatamente.
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer border-top">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Fechar</button>
+            <button type="submit" id="btnConfirmStatusChange" class="btn btn-primary fw-semibold px-4">
+              <i class="bi bi-check2 me-1"></i>Salvar Novo Estado
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rodapé -->
+  <footer class="py-3 text-center text-muted small border-top bg-white mt-auto">
+    <div class="container-fluid">
+      &copy; 2026 Gás-Fácil Angola — Módulo de Operações e Gestão de Entregas.
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/services/storage.js"></script>
+  <script src="assets/js/services/seedData.js"></script>
+  <script src="assets/js/services/authService.js"></script>
+  <script src="assets/js/services/orderService.js"></script>
+  <script src="assets/js/utils/formatters.js"></script>
+  <script src="assets/js/utils/themeSwitcher.js"></script>
+  <script src="assets/js/pages/admin.js"></script>
+</body>
+</html>
