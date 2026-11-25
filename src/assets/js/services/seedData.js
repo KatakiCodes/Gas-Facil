@@ -103,33 +103,21 @@ window.GasFacil.initSeedData = function() {
     storage.set('coverage', coverageZones);
   }
 
-  // 3. Usuário de Demonstração
-  if (!storage.has('users')) {
-    const demoUsers = [
-      {
-        id: 'usr_demo_01',
-        name: 'Manuel Domingos',
-        email: 'manuel@exemplo.ao',
-        phone: '+244 923 123 456',
-        password: '123',
-        role: 'customer',
-        loyalty: {
-          points: 420,
-          tier: 'Prata',
-          kilapeEligible: true,
-          activeKilape: false
-        },
-        addresses: [
-          {
-            id: 'addr_01',
-            title: 'Cúbico (Casa)',
-            zone: 'talatona',
-            street: 'Rua das Acácias, Casa 45',
-            reference: 'Perto do Kero Talatona'
-          }
-        ]
-      }
-    ];
-    storage.set('users', demoUsers);
+  // 3. Utilizador Gestor do Sistema (Operações e Gestão de Pedidos)
+  const defaultManager = {
+    id: 'usr_gestor_01',
+    name: 'Gestor Operacional',
+    email: 'gestor@gasfacil.ao',
+    phone: '+244 923 000 001',
+    password: 'admin',
+    role: 'manager',
+    createdAt: '2026-11-25T08:00:00Z'
+  };
+
+  const users = storage.get('users', []);
+  const managerExists = users.some(u => u.role === 'manager' || u.phone === '+244 923 000 001');
+  if (!managerExists) {
+    users.unshift(defaultManager);
+    storage.set('users', users);
   }
 };
