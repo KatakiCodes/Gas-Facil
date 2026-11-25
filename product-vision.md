@@ -92,7 +92,7 @@ Enquanto os canais tradicionais e aplicações concorrentes limitam-se a transa�
 - **Regras do "Gás Bazou" (Crédito Emergencial):**
   - Desbloqueio condicionado a pontuação mínima ou histórico positivo de compras anteriores.
   - Limite de 1 pedido ativo em Kilape por cliente (não é possível fazer novo Kilape com pendência em aberto).
-  - Cálculo e fixação da data limite de pagamento (ex.: 7, 15 ou até 30 dias).
+  - Cálculo e fixação da data limite de pagamento (prazo de até 1 mês / 30 dias, aplicando-se taxa de 5% do valor como juros de demora).
   - Notificações preventivas de aproximação da data limite de liquidação.
   - Recompensa de pontos bônus após pagamento pontual do Kilape, incentivando a adimplência.
 

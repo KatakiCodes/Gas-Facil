@@ -269,9 +269,10 @@
               <div>
                 <h5 class="alert-heading fw-bold mb-1">Elegível para "Gás Bazou"! (Nível ${tier.name})</h5>
                 <p class="mb-1">${eligibility.reason}</p>
-                <small class="text-success-emphasis fw-semibold">
-                  <i class="bi bi-calendar-check me-1"></i>Prazo de pagamento garantido até ${eligibility.dueDateFormatted}.
-                </small>
+                <div class="small text-success-emphasis fw-semibold mt-2">
+                  <i class="bi bi-calendar-check me-1"></i>Prazo de pagamento garantido até <strong>${eligibility.dueDateFormatted}</strong> (prazo de até 1 mês).
+                  <span class="d-block text-muted mt-1"><i class="bi bi-percent me-1"></i>Taxa de juros de demora: <strong>5% do valor</strong>.</span>
+                </div>
               </div>
             </div>
           `;

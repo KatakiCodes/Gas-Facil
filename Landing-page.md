@@ -23,7 +23,7 @@ Na concorrência e nos canais tradicionais, o modelo é estritamente pré-pago. 
 ### 2.2. A Solução Gás-Fácil
 1. **Programa de Fidelidade Automático:** Cada pedido entregue e pago dentro do prazo acumula pontos na conta do utilizador.
 2. **Desbloqueio do Kilape Emergencial:** Ao acumular 200 pontos (Nível Prata), o cliente desbloqueia a opção **"Gás Bazou"**.
-3. **Entrega sem Pagamento Imediato:** O botijão é entregue de imediato no cúbico, com até **15 dias de prazo** para liquidação.
+3. **Entrega sem Pagamento Imediato:** O botijão é entregue de imediato no cúbico, com prazo de pagamento de até **1 mês (30 dias)** e taxa de **5% do valor como juros de demora**.
 4. **Simulador Interativo:** A Landing Page inclui um simulador onde o visitante pode digitar pontos para testar a elegibilidade do benefício.
 
 ---

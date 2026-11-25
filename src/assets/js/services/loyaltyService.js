@@ -9,7 +9,8 @@ window.GasFacil = window.GasFacil || {};
 window.GasFacil.loyaltyService = {
   POINTS_PER_KZ: 0.02, // 1 ponto a cada 50 Kz
   MIN_POINTS_FOR_KILAPE: 200, // Pontuação mínima para desbloquear o "Gás Bazou"
-  KILAPE_DAYS_LIMIT: 15, // Prazo em dias para pagamento do Kilape
+  KILAPE_DAYS_LIMIT: 30, // Prazo em dias para pagamento do Kilape (até 1 mês)
+  LATE_FEE_PERCENT: 5, // Taxa de juros de demora de 5%
 
   getTier(points) {
     if (points >= 500) {
@@ -67,9 +68,10 @@ window.GasFacil.loyaltyService = {
 
     return {
       eligible: true,
-      reason: `Parabéns! Pelo seu nível de fidelidade, tem direito a pedir no Kilape e pagar em até ${this.KILAPE_DAYS_LIMIT} dias.`,
+      reason: `Parabéns! Pelo seu nível de fidelidade, tem direito a pedir no Kilape com prazo de pagamento de até 1 mês (${this.KILAPE_DAYS_LIMIT} dias), com taxa de 5% do valor como juros de demora.`,
       dueDate: dueDate.toISOString(),
-      dueDateFormatted: dueDate.toLocaleDateString('pt-AO')
+      dueDateFormatted: dueDate.toLocaleDateString('pt-AO'),
+      lateFeePercent: this.LATE_FEE_PERCENT
     };
   }
 };
