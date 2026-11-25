@@ -42,6 +42,9 @@
     GF.onThemeChanged = function() {
       updateOrderModalPrices();
     };
+
+    // 8. Verificar se há produto selecionado via URL (vindo dos cards da Landing Page)
+    checkUrlOrderParams();
   });
 
   /**
@@ -484,5 +487,28 @@
         }
       });
     });
+  }
+
+  /**
+   * Verifica se o utilizador veio da Landing Page com um produto pré-selecionado
+   */
+  function checkUrlOrderParams() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('product') || urlParams.get('item');
+    const purchaseType = urlParams.get('type') || 'refill';
+    const isKilape = urlParams.get('kilape') === 'true';
+    const color = urlParams.get('color');
+
+    // Se o tema veio especificado na URL, aplicar tema
+    if (color && GF.themeSwitcher) {
+      GF.themeSwitcher.applyTheme(color);
+    }
+
+    // Se veio produto selecionado, abrir o modal de pedidos com os dados preenchidos
+    if (productId) {
+      setTimeout(() => {
+        openOrderModalWithPreset(productId, purchaseType, isKilape);
+      }, 350);
+    }
   }
 })();

@@ -39,6 +39,9 @@
 
     // 7. Atualizar estado de autenticação no menu
     updateNavbarAuthState();
+
+    // 8. Configurar ações nos botões dos cards para direcionar ao painel de pedidos
+    setupCardOrderActions();
   });
 
   function updateNavbarAuthState() {
@@ -47,10 +50,14 @@
 
     if (GF.authService.isAuthenticated()) {
       const user = GF.authService.getCurrentUser();
-      const firstName = user?.name ? user.name.split(' ')[0] : 'Cliente';
+      const firstName = user?.name ? user.name.split(' ')[0] : 'Conta';
+      const isManager = user?.role === 'manager' || user?.role === 'admin';
+      const panelUrl = isManager ? 'admin.html' : 'dashboard.html';
+      const panelLabel = isManager ? `Painel Gestor (${firstName})` : `Meu Painel (${firstName})`;
+
       navAuthButtons.innerHTML = `
-        <a href="dashboard.html" class="btn btn-outline-primary btn-sm px-3 fw-semibold">
-          <i class="bi bi-speedometer2 me-1"></i>Meu Painel (${firstName})
+        <a href="${panelUrl}" class="btn btn-outline-primary btn-sm px-3 fw-semibold">
+          <i class="bi ${isManager ? 'bi-shield-lock' : 'bi-speedometer2'} me-1"></i>${panelLabel}
         </a>
         <a href="#precario" class="btn btn-primary btn-sm px-3 fw-semibold shadow-sm">
           <i class="bi bi-cart-check me-1" aria-hidden="true"></i>Pedir Gás
@@ -154,7 +161,7 @@
             </ul>
 
             <div class="mt-auto">
-              <a href="checkout.html?item=${encodeURIComponent(product.id)}&type=${currentPurchaseType}&color=${encodeURIComponent(currentTheme)}" class="btn ${product.popular ? 'btn-primary' : 'btn-outline-primary'} w-100 py-2 fw-semibold">
+              <a href="dashboard.html?product=${encodeURIComponent(product.id)}&type=${currentPurchaseType}&color=${encodeURIComponent(currentTheme)}" class="btn ${product.popular ? 'btn-primary' : 'btn-outline-primary'} w-100 py-2 fw-semibold btn-order-card" data-product-id="${GF.formatters.escapeHtml(product.id)}" data-purchase-type="${currentPurchaseType}">
                 <i class="bi bi-cart-plus me-1" aria-hidden="true"></i> Pedir ${isGasCylinder ? currentBrandName : 'Agora'}
               </a>
             </div>
@@ -311,5 +318,26 @@
         }
       });
     }
+  }
+
+  /**
+   * Configura o redirecionamento dos botões dos cards de produtos diretamente ao painel de pedidos
+   */
+  function setupCardOrderActions() {
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.btn-order-card');
+      if (!btn) return;
+
+      e.preventDefault();
+      const productId = btn.getAttribute('data-product-id') || 'botija-13kg';
+      const purchaseType = btn.getAttribute('data-purchase-type') || currentPurchaseType;
+      const orderDestination = `dashboard.html?product=${encodeURIComponent(productId)}&type=${encodeURIComponent(purchaseType)}&color=${encodeURIComponent(currentTheme)}`;
+
+      if (GF.authService && GF.authService.isAuthenticated()) {
+        window.location.href = orderDestination;
+      } else {
+        window.location.href = `login.html?redirect=${encodeURIComponent(orderDestination)}`;
+      }
+    });
   }
 })();

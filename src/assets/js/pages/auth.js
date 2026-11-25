@@ -16,12 +16,34 @@
     // 2. Inicializar alternadores de visibilidade de senha
     setupPasswordToggles();
 
-    // 3. Inicializar formulário de login (se presente na página)
+    // 3. Ajustar links cruzados para preservar parâmetro de redirecionamento (se houver)
+    preserveRedirectParam();
+
+    // 4. Inicializar formulário de login (se presente na página)
     setupLoginForm();
 
-    // 4. Inicializar formulário de cadastro (se presente na página)
+    // 5. Inicializar formulário de cadastro (se presente na página)
     setupRegisterForm();
   });
+
+  /**
+   * Preserva o parâmetro 'redirect' nos links de navegação entre login e cadastro
+   */
+  function preserveRedirectParam() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const redirectUrl = urlParams.get('redirect');
+    if (!redirectUrl) return;
+
+    const linkToRegister = document.querySelector('a[href="register.html"]');
+    if (linkToRegister) {
+      linkToRegister.href = `register.html?redirect=${encodeURIComponent(redirectUrl)}`;
+    }
+
+    const linkToLogin = document.querySelector('a[href="login.html"]');
+    if (linkToLogin) {
+      linkToLogin.href = `login.html?redirect=${encodeURIComponent(redirectUrl)}`;
+    }
+  }
 
   /**
    * Alternador de visibilidade de palavra-passe (mostrar/ocultar senha)
@@ -64,17 +86,6 @@
     const passwordInput = document.getElementById('loginPassword');
     const alertBox = document.getElementById('loginAlert');
     const btnSubmit = document.getElementById('btnLoginSubmit');
-    const btnFillDemo = document.getElementById('btnFillDemo');
-
-    // Botão para preenchimento de teste rápido da conta demo
-    if (btnFillDemo) {
-      btnFillDemo.addEventListener('click', (e) => {
-        e.preventDefault();
-        if (phoneInput) phoneInput.value = '923 123 456';
-        if (passwordInput) passwordInput.value = '123';
-        hideAlert();
-      });
-    }
 
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -93,9 +104,18 @@
       try {
         const result = await GF.authService.login(phone, password);
         if (result.success) {
-          showAlert(`Bem-vindo de volta, ${result.user.name}! Redirecionando...`, 'success');
+          showAlert(`Bem-vindo, ${result.user.name}! Redirecionando...`, 'success');
           setTimeout(() => {
-            window.location.href = 'dashboard.html';
+            const urlParams = new URLSearchParams(window.location.search);
+            const redirectUrl = urlParams.get('redirect');
+
+            if (result.user.role === 'manager' || result.user.role === 'admin') {
+              window.location.href = 'admin.html';
+            } else if (redirectUrl) {
+              window.location.href = decodeURIComponent(redirectUrl);
+            } else {
+              window.location.href = 'dashboard.html';
+            }
           }, 800);
         } else {
           showAlert(result.message || 'Dados inválidos.', 'danger');
@@ -167,7 +187,14 @@
         if (result.success) {
           showAlert(`Conta criada com sucesso! Ganhou 50 pontos de fidelidade. Acedendo ao painel...`, 'success');
           setTimeout(() => {
-            window.location.href = 'dashboard.html';
+            const urlParams = new URLSearchParams(window.location.search);
+            const redirectUrl = urlParams.get('redirect');
+
+            if (redirectUrl) {
+              window.location.href = decodeURIComponent(redirectUrl);
+            } else {
+              window.location.href = 'dashboard.html';
+            }
           }, 900);
         } else {
           showAlert(result.message || 'Não foi possível concluir o registo.', 'danger');
